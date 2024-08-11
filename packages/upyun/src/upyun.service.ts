@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common'
-import { Client } from 'upyun'
+import * as upyun from 'upyun'
 
 @Injectable()
-export class UpyunService extends Client {}
+export class UpyunService extends upyun.Client {}

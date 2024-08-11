@@ -1,4 +1,4 @@
-import { Bucket, Client } from 'upyun'
+import * as upyun from 'upyun'
 import type { DynamicModule, InjectionToken, Provider } from '@nestjs/common'
 import { Module } from '@nestjs/common'
 import type { Promisable } from '@naiable/utils'
@@ -32,14 +32,14 @@ export class UpyunModule {
     if (Array.isArray(options)) {
       options.forEach(option => providers.push({
         provide: option.provide,
-        useValue: new Client(new Bucket(option.bucket, option.operator, option.password)),
+        useValue: new upyun.Client(new upyun.Bucket(option.bucket, option.operator, option.password)),
       }),
       )
     }
     else {
       providers.push({
         provide: UpyunService,
-        useValue: new Client(new Bucket(options.bucket, options.operator, options.password)),
+        useValue: new upyun.Client(new upyun.Bucket(options.bucket, options.operator, options.password)),
       })
     }
 
@@ -59,7 +59,7 @@ export class UpyunModule {
         inject: options.inject,
         async useFactory(...args) {
           const result = await options.useFactory(...args)
-          return new Client(new Bucket(result.bucket, result.operator, result.password))
+          return new upyun.Client(new upyun.Bucket(result.bucket, result.operator, result.password))
         },
       }))
     }
@@ -69,7 +69,7 @@ export class UpyunModule {
         inject: options.inject,
         async useFactory(...args) {
           const result = await options.useFactory(...args)
-          return new Client(new Bucket(result.bucket, result.operator, result.password))
+          return new upyun.Client(new upyun.Bucket(result.bucket, result.operator, result.password))
         },
       })
     }
